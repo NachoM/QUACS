@@ -103,13 +103,13 @@ class ROS_Handler(DroneController, ROS_Object, object):
 		super(ROS_Handler, self).__init__()
 		
 		self.subscriber.update(
-			controller_state = rospy.Subscriber('/ardrone/controller/state', KeyValue, callback = self.RecieveState),
-			state_estimation = rospy.Subscriber('/ardrone/sensorfusion/navdata', Odometry, callback = self.RecieveOdometry, callback_args = 'set_input' ),
-			set_point = rospy.Subscriber('/ardrone/trajectory', Odometry, callback = self.RecieveOdometry, callback_args = 'change_set_point' )
+			controller_state = rospy.Subscriber('ardrone/controller/state', KeyValue, callback = self.RecieveState),
+			state_estimation = rospy.Subscriber('ardrone/sensorfusion/navdata', Odometry, callback = self.RecieveOdometry, callback_args = 'set_input' ),
+			set_point = rospy.Subscriber('ardrone/trajectory', Odometry, callback = self.RecieveOdometry, callback_args = 'change_set_point' )
 			)
 
 		self.publisher.update( 
-			command_velocity = rospy.Publisher('/cmd_vel', Twist)
+			command_velocity = rospy.Publisher('cmd_vel', Twist)
 			)
 
 		self.timer.update( 
@@ -119,7 +119,8 @@ class ROS_Handler(DroneController, ROS_Object, object):
 		self.tfListener = tf.TransformListener()
 		
 		# self.angles_map = dict(x = 0, y = 1 , z = 2)
-		
+		self.my_tf_prefix = rospy.get_param('tf_prefix')
+
 	def RecieveOdometry( self, data , method):
 
 		point_data = Vector3Stamped()
@@ -127,10 +128,10 @@ class ROS_Handler(DroneController, ROS_Object, object):
 
 		#transform position
 		point_data.vector = data.pose.pose.position 
-		data.pose.pose.position = self.tfListener.transformVector3("/drone_local", point_data).vector
+		data.pose.pose.position = self.tfListener.transformVector3(self.my_tf_prefix+'/drone_local', point_data).vector
 		#transform velocity
 		point_data.vector = data.twist.twist.linear 
-		data.twist.twist.linear = self.tfListener.transformVector3("/drone_local", point_data).vector
+		data.twist.twist.linear = self.tfListener.transformVector3(self.my_tf_prefix+'/drone_local', point_data).vector
 
 
 

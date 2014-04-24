@@ -64,14 +64,14 @@ class ROS_Handler(Quadrotor, ROS_Object, object):
 		super(ROS_Handler, self).__init__()
 
 		self.publisher.update(
-			land = rospy.Publisher('/ardrone/land', Empty, latch = True),
-			takeoff = rospy.Publisher('/ardrone/takeoff', Empty, latch = True),
-			reset = rospy.Publisher('/ardrone/reset', Empty, latch = True),
-			cmd_vel = rospy.Publisher('/cmd_vel', Twist),
+			land = rospy.Publisher('ardrone/land', Empty, latch = True),
+			takeoff = rospy.Publisher('ardrone/takeoff', Empty, latch = True),
+			reset = rospy.Publisher('ardrone/reset', Empty, latch = True),
+			cmd_vel = rospy.Publisher('cmd_vel', Twist),
 			)		
 
 		self.subscriber.update(
-			ardrone_state = rospy.Subscriber('/ardrone/navdata', Navdata, callback = self.RecieveNavdata),
+			ardrone_state = rospy.Subscriber('ardrone/navdata', Navdata, callback = self.RecieveNavdata),
 			)
 
 		self.timer.update(

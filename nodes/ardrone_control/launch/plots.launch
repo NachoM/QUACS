@@ -1,13 +1,16 @@
+<?xml version="1.0"?>
+
 <launch>
 
-	<group ns="Plot">
-		<!--node pkg="rxtools" type="rxplot" name="plot_set_point" args="/ground_truth/state/pose/pose/orientation/z:w,/ardrone/sensorfusion/navdata/pose/pose/orientation/z:w" /-->
-		<node pkg="rxtools" type="rxplot" name="cartesian" args="/ardrone/trajectory/pose/pose/position/x:y:z,/ardrone/sensorfusion/navdata/pose/pose/position/x:y:z" />
-		<node pkg="rxtools" type="rxplot" name="orientation" args="/ardrone/trajectory/pose/pose/orientation/z:w,/ardrone/sensorfusion/navdata/pose/pose/orientation/z:w" />
+<!--	<group ns="Plot">-->
+		<node pkg="rxtools" type="rxplot" name="plot_set_point" args="ground_truth/state/pose/pose/position/x:y:z,ardrone/sensorfusion/navdata/pose/pose/position/x:y:z --period=60" />
+		<!--<node pkg="rxtools" type="rxplot" name="plot_set_point" args="ground_truth/state/pose/pose/orientation/z:w,ardrone/sensorfusion/navdata/pose/pose/orientation/z:w" />-->
+		<!--<node pkg="rxtools" type="rxplot" name="cartesian" args="ardrone/trajectory/pose/pose/position/x:y:z,ardrone/sensorfusion/navdata/pose/pose/position/x:y:z" />-->
+		<!--<node pkg="rxtools" type="rxplot" name="orientation" args="ardrone/trajectory/pose/pose/orientation/z:w,ardrone/sensorfusion/navdata/pose/pose/orientation/z:w" />-->
 		<!-- plot trajectory and estimated position -->
-		<!--node pkg="rxtools" type="rxplot" name="plot_set_point" args="/ardrone/trajectory/pose/pose/orientation/z:w,/ground_truth/state/pose/pose/orientation/z:w,/ardrone/sensorfusion/navdata/pose/pose/orientation/z:w" /-->
+		<!--node pkg="rxtools" type="rxplot" name="plot_set_point" args="ardrone/trajectory/pose/pose/orientation/z:w,ground_truth/state/pose/pose/orientation/z:w,ardrone/sensorfusion/navdata/pose/pose/orientation/z:w" /-->
 		<!-- plot true position and estimated position -->
-		<!--node pkg="rxtools" type="rxplot" name="plot_error" args="/ardrone/trajectory/pose/pose/position/x:y:z,/ardrone/sensorfusion/navdata/pose/pose/position/x:y:z" /-->
-    </group>
+		<!--node pkg="rxtools" type="rxplot" name="plot_error" args="ardrone/trajectory/pose/pose/position/x:y:z,ardrone/sensorfusion/navdata/pose/pose/position/x:y:z" /-->
+<!--    </group>-->
 
 </launch>

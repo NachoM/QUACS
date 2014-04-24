@@ -76,17 +76,17 @@ class ROS_Handler(Quadrotor, ROS_Object, object):
 		self.t = 0.0;
 		self.Ts = kwargs.get('Command_Time', IMU_Period)
 
-		self.name = kwargs.get('name', "/goal")
+		self.name = kwargs.get('name', "goal")
 
 		self.publisher.update(
-			land = rospy.Publisher('/ardrone/land', Empty, latch = True),
-			takeoff = rospy.Publisher('/ardrone/takeoff', Empty, latch = True),
-			reset = rospy.Publisher('/ardrone/reset', Empty, latch = True),
-			controller_state = rospy.Publisher('/ardrone/controller/state', KeyValue, latch = True),
-			trajectory = rospy.Publisher('/ardrone/trajectory', Odometry) )
+			land = rospy.Publisher('ardrone/land', Empty, latch = True),
+			takeoff = rospy.Publisher('ardrone/takeoff', Empty, latch = True),
+			reset = rospy.Publisher('ardrone/reset', Empty, latch = True),
+			controller_state = rospy.Publisher('ardrone/controller/state', KeyValue, latch = True),
+			trajectory = rospy.Publisher('ardrone/trajectory', Odometry) )
 
 		self.subscriber.update(
-			ardrone_state = rospy.Subscriber('/ardrone/navdata', Navdata, callback = self.RecieveNavdata),
+			ardrone_state = rospy.Subscriber('ardrone/navdata', Navdata, callback = self.RecieveNavdata),
 			)
 
 		self.tf_broadcaster.update( 
@@ -111,7 +111,7 @@ class ROS_Handler(Quadrotor, ROS_Object, object):
 		msgs = Odometry( )
 		msgs.header.stamp = rospy.Time.now()
 		msgs.header.frame_id = "/nav"
-		msgs.child_frame_id = "/goal" 
+		msgs.child_frame_id = "goal" 
 
 		# position
 		msgs.pose.pose.position.x = f_x(self.t)
@@ -150,7 +150,7 @@ class ROS_Handler(Quadrotor, ROS_Object, object):
 		msgs = Odometry( )
 		msgs.header.stamp = rospy.Time.now()
 		msgs.header.frame_id = "/nav"
-		msgs.child_frame_id = "/goal" 
+		msgs.child_frame_id = "goal" 
 
 		# position
 		msgs.pose.pose.position.x = f_x(self.t)

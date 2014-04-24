@@ -47,7 +47,7 @@ class FilteredOdometry(ROS_SensorFusion, object):
     def __init__(self, **kwargs ):
         super(FilteredOdometry, self).__init__(**kwargs)
         self.low_pass_filters = dict()
-        filter_params = rospy.get_param( '/Navdata', dict() ) 
+        filter_params = rospy.get_param( 'Navdata', dict() ) 
 
         for key, values in filter_params.items():
             self.low_pass_filters[key] = DigitalFilter( a = values['a'], b = values['b'] )

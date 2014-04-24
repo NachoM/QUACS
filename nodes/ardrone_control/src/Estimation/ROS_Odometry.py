@@ -40,17 +40,17 @@ class ROS_Odometry(Quadrotor, ROS_Object, object):
     
     def __init__(self, **kwargs ):
         super(ROS_Odometry, self).__init__(**kwargs)
-        self.name = kwargs.get('name', "/local")
+        self.name = kwargs.get('name', 'local')
 
         self.subscriber.update(
-            raw_navdata = rospy.Subscriber('/ardrone/navdata',Navdata, callback = self.ReceiveNavdata ),
+            raw_navdata = rospy.Subscriber('ardrone/navdata',Navdata, callback = self.ReceiveNavdata ),
             # raw_gps = rospy.Subscriber('/fix', NavSatFix, callback = self.ReceiveGPS),
             # raw_imu = rospy.Subscriber('/ardrone/imu', Imu, callback = self.ReceiveImu ),
             # raw_sonar = rospy.Subscriber('/sonar_height', Range, callback = self.ReceiveSonarHeight )
             )
 
         self.publisher.update(
-            state = rospy.Publisher('/ardrone/sensorfusion/navdata', Odometry)
+            state = rospy.Publisher('ardrone/sensorfusion/navdata', Odometry)
             )
 
         self.tf_broadcaster.update( 
@@ -68,7 +68,7 @@ class ROS_Odometry(Quadrotor, ROS_Object, object):
     def Talk(self):
         msgs = Odometry()
         msgs.header.stamp = rospy.Time.now()
-        msgs.header.frame_id = "/nav"
+        msgs.header.frame_id = '/nav'
         msgs.child_frame_id = self.name 
 
 

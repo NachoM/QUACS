@@ -1,4 +1,5 @@
 <launch>
+	<param name="tf_prefix" type="string" value=""/>
 	<!-- include Simulator -->
 	<arg name="simulator" default="true"/>
 	<include file="$(find cvg_sim_test)/launch/3boxes_room.launch" if="$(arg simulator)"/>
@@ -18,14 +19,14 @@
 	<rosparam file="$(find ardrone_control)/parameters/Filter_Parameters.yaml" command="load" />
 
 	<!-- rosrun ardrone_control pkg-->
-	<group ns="Control">
+	<!-- <group ns="Control">-->
 		<!-- rosrun Estimator -->
 		<node name="Estimator" pkg="ardrone_control" type="FilteredOdometry.py" respawn="false" output="screen" />
 		<!-- rosrun Controller -->
 		<node name="Controller" pkg="ardrone_control" type="ROS_PIDController.py" respawn="false" output="screen" />
 		<!-- rosrun StateHandling -->
 		<node name="StateHandler" pkg="ardrone_control" type="joystickControl.py" respawn="false" output="screen" />
-	</group>
+	<!-- </group>-->
 
 	<!-- rosrun joy_node  -->
 	<node name="PS3Joy" respawn="true" pkg="joy" type="joy_node">
