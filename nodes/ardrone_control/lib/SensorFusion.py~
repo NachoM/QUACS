@@ -25,7 +25,7 @@ from BasicObject import BasicObject, SixDofObject, Quaternion
 # from BasicObject import BasicObject
 
 #R = 6378137.0
-R = 1000
+R = 100
 class IMU_Filter(Sensors.IMU, Process.SO3, object):
 	def __init__(self, **kwargs):
 		super(IMU_Filter, self).__init__(**kwargs)

@@ -1,0 +1,36 @@
+<launch>
+	<param name="tf_prefix" type="string" value=""/>
+	<!-- include Simulator -->
+	<arg name="simulator" default="true"/>
+	<include file="$(find cvg_sim_test)/launch/3boxes_room.launch" if="$(arg simulator)"/>
+	
+	<!-- include record files -->
+	<arg name="record" default="false" />
+	<include file="$(find ardrone_control)/launch/record.launch" if="$(arg record)"/>
+
+	<!-- include realtime plot -->
+	<arg name="plot" default="false" /> <!-- It CRASHES simulator in my Computer-->
+	<include file="$(find ardrone_control)/launch/plots.launch" if="$(arg plot)"/>	
+	
+
+	<!-- Load PID parameters -->
+	<rosparam file="$(find ardrone_control)/parameters/PID_Parameters.yaml" command="load" />
+	<!-- Load Filter parameters -->
+	<rosparam file="$(find ardrone_control)/parameters/Filter_Parameters.yaml" command="load" />
+
+	<!-- rosrun ardrone_control pkg-->
+	<group ns="Control">
+		<!-- rosrun Estimator -->
+		<node name="Estimator" pkg="ardrone_control" type="FilteredOdometry.py" respawn="false" output="screen" />
+		<!-- rosrun Controller -->
+		<node name="Controller" pkg="ardrone_control" type="ROS_PIDController.py" respawn="false" output="screen" />
+		<!-- rosrun StateHandling -->
+		<node name="StateHandler" pkg="ardrone_control" type="joystickControl.py" respawn="false" output="screen" />
+	</group>
+
+	<!-- rosrun joy_node  -->
+	<node name="PS3Joy" respawn="true" pkg="joy" type="joy_node">
+		<param name="dev" type="string" value="/dev/input/js0" />
+	</node>
+
+</launch>

@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+
+<launch>
+   
+  <!-- Start Gazebo with wg world running in (max) realtime -->
+  <arg name="gui" default="false"/>
+  <arg name="gazebo-engine" default="true"/>
+  
+  <param name="/use_sim_time" value="true" />
+
+    <!-- start gazebo sim -->
+  <group if="$(arg gazebo-engine)">
+  <node name="gazebo" pkg="gazebo" type="gazebo" args="$(find multi_cvg_sim_gazebo)/worlds/multi_quad_clean_zero_yaw.world" respawn="false" output="screen"/>
+  </group>
+
+    <!-- start gazebo gui -->
+  <group if="$(arg gui)">
+    <node name="gazebo_gui" pkg="gazebo" type="gui" respawn="false" output="screen" required="true"/>
+  </group>
+   
+    <!-- Start rviz visualization with preset config  -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find multi_cvg_sim_test)/rviz_cfg/outdoor_flight.vcg"/>
+
+  <group ns="drone_1"> 
+        <param name="tf_prefix" type="string" value="drone_1"/>
+	<!-- Load PID parameters -->
+	<rosparam file="$(find ardrone_control)/parameters/PID_Parameters.yaml" command="load" />
+	<!-- Load Filter parameters -->
+	<rosparam file="$(find ardrone_control)/parameters/Filter_Parameters.yaml" command="load" />
+	
+	<!-- rosrun ardrone_control pkg-->
+	<!-- rosrun Estimator -->
+	<node name="Estimator" 
+		pkg="ardrone_control" 
+		type="FilteredOdometry.py" respawn="false" output="screen"  />
+	<!-- rosrun Controller -->
+	<node name="Controller" 
+		pkg="ardrone_control" 
+		type="ROS_PIDController.py" respawn="false" output="screen" />
+	<!-- rosrun StateHandling -->
+	<node name="StateHandler" 
+		pkg="ardrone_control" 
+		type="keyboardControl.py" respawn="false" output="screen" />
+
+	<!-- GPS simulator -->
+	<node name="gps_from_ground_truth" pkg="integrated_navigation" type="generate_gps_from_ground_truth_for_quacs.py" output="screen" />
+  </group>
+
+  <group ns="drone_2"> 
+        <param name="tf_prefix" type="string" value="drone_2"/>
+	<!-- Load PID parameters -->
+	<rosparam file="$(find ardrone_control)/parameters/PID_Parameters.yaml" command="load" />
+	<!-- Load Filter parameters -->
+	<rosparam file="$(find ardrone_control)/parameters/Filter_Parameters.yaml" command="load" />
+	
+	<!-- rosrun ardrone_control pkg-->
+	<!-- rosrun Estimator -->
+	<node name="Estimator" 
+		pkg="ardrone_control" 
+		type="FilteredOdometry.py" respawn="false" output="screen"  />
+	<!-- rosrun Controller -->
+	<node name="Controller" 
+		pkg="ardrone_control" 
+		type="ROS_PIDController.py" respawn="false" output="screen" />
+	<!-- rosrun StateHandling -->
+	<node name="StateHandler" 
+		pkg="ardrone_control" 
+		type="keyboardControl.py" respawn="false" output="screen" />
+
+	<!-- GPS simulator -->
+	<node name="gps_from_ground_truth" pkg="integrated_navigation" type="generate_gps_from_ground_truth_for_quacs.py" output="screen" />
+  </group>
+
+  <group ns="drone_3"> 
+        <param name="tf_prefix" type="string" value="drone_3"/>
+	<!-- Load PID parameters -->
+	<rosparam file="$(find ardrone_control)/parameters/PID_Parameters.yaml" command="load" />
+	<!-- Load Filter parameters -->
+	<rosparam file="$(find ardrone_control)/parameters/Filter_Parameters.yaml" command="load" />
+	
+	<!-- rosrun ardrone_control pkg-->
+	<!-- rosrun Estimator -->
+	<node name="Estimator" 
+		pkg="ardrone_control" 
+		type="FilteredOdometry.py" respawn="false" output="screen"  />
+	<!-- rosrun Controller -->
+	<node name="Controller" 
+		pkg="ardrone_control" 
+		type="ROS_PIDController.py" respawn="false" output="screen" />
+	<!-- rosrun StateHandling -->
+	<node name="StateHandler" 
+		pkg="ardrone_control" 
+		type="keyboardControl.py" respawn="false" output="screen" />
+
+	<!-- GPS simulator -->
+	<node name="gps_from_ground_truth" pkg="integrated_navigation" type="generate_gps_from_ground_truth_for_quacs.py" output="screen" />
+  </group>
+
+</launch>

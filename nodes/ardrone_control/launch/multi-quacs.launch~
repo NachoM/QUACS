@@ -11,8 +11,9 @@
 <arg name="gui" default="true"/>
 <param name="/use_sim_time" value="true" />
 
-<!-- TUM Gazebo Simulator -->
-<include file="$(find multi_cvg_sim_test)/launch/multi_uav_3boxes_room_zero_yaw.launch"/>
+<!-- TUM Gazebo Simulator 
+<include file="$(find multi_cvg_sim_test)/launch/multi_uav_3boxes_room_zero_yaw.launch"/> -->
+<include file="$(find multi_cvg_sim_test)/launch/multi_uav_3boxes_room.launch"/> 
 
 
 <!-- Start rviz visualization with preset config  -->

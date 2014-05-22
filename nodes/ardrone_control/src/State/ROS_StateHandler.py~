@@ -167,7 +167,7 @@ class ROS_Handler(Quadrotor, ROS_Object, object):
             msgs.child_frame_id, 
             msgs.header.frame_id)
 
-                r = rospy.Rate(2) # 5hz
+                r = rospy.Rate(5) # 5hz
 	        r.sleep()
                 
 

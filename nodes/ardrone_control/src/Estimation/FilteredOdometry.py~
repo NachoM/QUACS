@@ -85,7 +85,7 @@ def main():
             #imu = SensorFusion.IMU_Magdwick(  ),
             #gps = SensorFusion.GPS_Filter(  ) 
             #gps = SensorFusion.GPS_Filter( position = SixDofObject( x = 0.0, y = -0.0, z = 1.0, yaw = 0.0, pitch = 0.0, roll = 0.0) ) 
-            gps = SensorFusion.GPS_Filter( position = SixDofObject( x = random.random()*10.0-5., y = random.random()*10.0-5., z = random.random()*1.0, yaw = 0, pitch = 0.0, roll = 0.0) ) 
+            #gps = SensorFusion.GPS_Filter( position = SixDofObject( x = random.random()*10.0-5., y = random.random()*10.0-5., z = random.random()*1.0, yaw = 0, pitch = 0.0, roll = 0.0) ) 
             ) 
         )
     
